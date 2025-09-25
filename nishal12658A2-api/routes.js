@@ -33,13 +33,18 @@ router.delete('/events/:id', async (req, res) => {
 
 // Search events
 router.get('/search', async (req, res) => {
-  const { location,} = req.query;
+  const { location,category } = req.query;
   let query = 'SELECT * FROM events WHERE 1=1';
   let params = [];
 
   if (location) {
     query += ' AND location LIKE ?';
     params.push(`%${location}%`);
+  }
+
+  if (category) {
+    query += ' AND category_id = ?';
+    params.push(category);
   }
 
   const [rows] = await db.query(query, params);
