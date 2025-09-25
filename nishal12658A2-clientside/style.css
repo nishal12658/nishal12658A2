@@ -1,0 +1,5 @@
+body { font-family: Arial; padding: 20px; background: #f4f4f4; }
+nav { margin-bottom: 20px; }
+nav a { margin-right: 10px; text-decoration: none; }
+input, select { margin: 5px; padding: 5px; }
+button { padding: 6px 12px; }
