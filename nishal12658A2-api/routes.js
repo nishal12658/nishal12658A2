@@ -33,7 +33,7 @@ router.delete('/events/:id', async (req, res) => {
 
 // Search events
 router.get('/search', async (req, res) => {
-  const { location,category } = req.query;
+  const { location, category, status } = req.query;
   let query = 'SELECT * FROM events WHERE 1=1';
   let params = [];
 
@@ -45,6 +45,10 @@ router.get('/search', async (req, res) => {
   if (category) {
     query += ' AND category_id = ?';
     params.push(category);
+  }
+  if (status) {
+    query += ' AND status = ?';
+    params.push(status);
   }
 
   const [rows] = await db.query(query, params);
