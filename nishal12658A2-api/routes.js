@@ -31,4 +31,13 @@ router.delete('/events/:id', async (req, res) => {
   }
 });
 
+// Search events
+router.get('/search', async (req, res) => {
+  const { location } = req.query;
+  let query = 'SELECT * FROM events WHERE 1=1';
+
+
+  const [rows] = await db.query(query, location);
+  res.json(rows);
+});
 module.exports = router;
