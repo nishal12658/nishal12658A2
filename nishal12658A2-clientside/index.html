@@ -1,13 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Charity Events</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charity Events - Home</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <nav><a href="index.html">Home</a> | <a href="search.html">Search</a></nav>
-  <h1>Upcoming Charity Events</h1>
-  <div id="eventList"></div>
+  <nav class="navbar">
+    <div class="nav-container">
+      <h2 class="nav-logo">Charity Events</h2>
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="index.html" class="nav-link active">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="search.html" class="nav-link">Search Events</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <section class="hero-section">
+      <div class="hero-content">
+        <h1>Welcome to Charity Events</h1>
+        <p class="hero-description">
+          Join us in making a difference! Our mission is to connect communities through meaningful charity events that support various causes and create positive impact in the world.
+        </p>
+        <div class="contact-info">
+          <p><strong>Contact Us:</strong> info@charityevents.org | (555) 123-4567</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="events-section">
+      <h2>Upcoming Charity Events</h2>
+      <div id="loading" class="loading">Loading events...</div>
+      <div id="eventList" class="event-grid"></div>
+      <div id="errorMessage" class="error-message" style="display: none;"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2024 Charity Events. Making a difference, one event at a time.</p>
+  </footer>
+
   <script src="main.js"></script>
 </body>
 </html>
