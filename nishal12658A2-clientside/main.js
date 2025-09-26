@@ -66,3 +66,11 @@ function displayEvents(events) {
 
     eventListElement.innerHTML = eventsHTML;
 }
+
+function viewEventDetails(eventId) {
+    // Store event ID in localStorage for the detail page
+    localStorage.setItem('selectedEventId', eventId);
+    
+    // Navigate to event detail page
+    window.location.href = 'event-detail.html';
+}
