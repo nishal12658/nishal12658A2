@@ -91,4 +91,16 @@ router.get('/search', async (req, res) => {
   const [rows] = await db.query(query, params);
   res.json(rows);
 });
+
+// Get all categories
+router.get('/categories', async (req, res) => {
+  try {
+    const [rows] = await db.query('SELECT * FROM categories');
+    res.json(rows);
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    res.status(500).json({ error: 'Failed to fetch categories' });
+  }
+});
+
 module.exports = router;
