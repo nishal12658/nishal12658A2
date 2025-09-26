@@ -35,3 +35,34 @@ async function loadEvents() {
         errorElement.style.display = 'block';
     }
 }
+
+function displayEvents(events) {
+    const eventListElement = document.getElementById('eventList');
+    
+    const eventsHTML = events.map(event => {
+        const eventDate = new Date(event.date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        return `
+            <div class="event-card" onclick="viewEventDetails(${event.id})">
+                <h3>${event.name}</h3>
+                <div class="event-meta">
+                    <span class="event-date">${eventDate}</span>
+                    <span class="event-location">${event.location}</span>
+                    <span class="event-category">${event.category}</span>
+                </div>
+                <div class="event-description">
+                    ${event.description || 'Join us for this meaningful charity event.'}
+                </div>
+                <a href="#" class="event-link" onclick="event.preventDefault(); viewEventDetails(${event.id})">
+                    View Details →
+                </a>
+            </div>
+        `;
+    }).join('');
+
+    eventListElement.innerHTML = eventsHTML;
+}
