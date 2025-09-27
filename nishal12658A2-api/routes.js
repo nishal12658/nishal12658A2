@@ -10,25 +10,30 @@ router.get('/', (req, res) => {
 router.get('/events', async (req, res) => {
   try {
     const { date, location, category } = req.query;
-    let query = 'SELECT * FROM events WHERE 1=1';
+    let query = `
+      SELECT e.*, c.name as category 
+      FROM events e 
+      LEFT JOIN categories c ON e.category_id = c.id 
+      WHERE 1=1
+    `;
     const params = [];
 
     if (date) {
-      query += ' AND DATE(date) = ?';
+      query += ' AND DATE(e.date) = ?';
       params.push(date);
     }
 
     if (location) {
-      query += ' AND location LIKE ?';
+      query += ' AND e.location LIKE ?';
       params.push(`%${location}%`);
     }
 
     if (category) {
-      query += ' AND category = ?';
+      query += ' AND c.name = ?';
       params.push(category);
     }
 
-    query += ' ORDER BY date ASC';
+    query += ' ORDER BY e.date ASC';
 
     const [rows] = await db.query(query, params);
     res.json(rows);
@@ -42,7 +47,12 @@ router.get('/events', async (req, res) => {
 router.get('/events/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const [rows] = await db.query('SELECT * FROM events WHERE id = ?', [id]);
+    const [rows] = await db.query(`
+      SELECT e.*, c.name as category 
+      FROM events e 
+      LEFT JOIN categories c ON e.category_id = c.id 
+      WHERE e.id = ?
+    `, [id]);
     
     if (rows.length === 0) {
       return res.status(404).json({ error: 'Event not found' });
