@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Details - Charity Events</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <h2 class="nav-logo">Charity Events</h2>
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="index.html" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="search.html" class="nav-link">Search Events</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <div id="loading" class="loading">Loading event details...</div>
+    <div id="errorMessage" class="error-message" style="display: none;"></div>
+    
+    <div id="eventDetails" class="event-details" style="display: none;">
+      <div class="event-header">
+        <h1 id="eventName"></h1>
+        <div class="event-meta">
+          <span id="eventDate" class="event-date"></span>
+          <span id="eventLocation" class="event-location"></span>
+          <span id="eventCategory" class="event-category"></span>
+        </div>
+      </div>
+
+      <div class="event-content">
+        <div class="event-description">
+          <h2>About This Event</h2>
+          <p id="eventDescription"></p>
+        </div>
+
+        <div class="event-info-grid">
+          <div class="info-card">
+            <h3>Event Details</h3>
+            <div class="info-item">
+              <strong>Date & Time:</strong>
+              <span id="eventDateTime"></span>
+            </div>
+            <div class="info-item">
+              <strong>Location:</strong>
+              <span id="eventFullLocation"></span>
+            </div>
+            <div class="info-item">
+              <strong>Category:</strong>
+              <span id="eventCategoryFull"></span>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h3>Registration</h3>
+            <div class="ticket-info">
+              <div id="ticketPrice" class="ticket-price"></div>
+              <p id="ticketDescription"></p>
+            </div>
+            <button id="registerBtn" class="btn btn-primary btn-large">Register for Event</button>
+          </div>
+
+          <div class="info-card">
+            <h3>Charity Goal</h3>
+            <div class="goal-progress">
+              <div class="goal-info">
+                <span>Goal: $<span id="goalAmount"></span></span>
+                <span>Raised: $<span id="raisedAmount"></span></span>
+              </div>
+              <div class="progress-bar">
+                <div id="progressFill" class="progress-fill"></div>
+              </div>
+              <div class="progress-percentage">
+                <span id="progressPercent">0%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2024 Charity Events. Making a difference, one event at a time.</p>
+  </footer>
+
+  <!-- Registration Modal -->
+  <div id="registrationModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Registration</h2>
+      <p>This feature is currently under construction.</p>
+      <button id="closeModal" class="btn btn-secondary">Close</button>
+    </div>
+  </div>
+
+  <script src="event-detail.js"></script>
+</body>
+</html>
