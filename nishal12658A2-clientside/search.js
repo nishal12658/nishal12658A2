@@ -13,7 +13,22 @@ document.addEventListener("DOMContentLoaded", function () {
     await performSearch();
   });
 
+  // Handle clear filters button
+  clearFiltersBtn.addEventListener("click", function () {
+    clearFilters();
+  });
 
+  function clearFilters() {
+    // Clear all form fields
+    document.getElementById("eventDate").value = "";
+    document.getElementById("eventLocation").value = "";
+    document.getElementById("eventCategory").value = "";
+
+    // Clear results
+    searchResultsElement.innerHTML = "";
+    errorElement.style.display = "none";
+    noResultsElement.style.display = "none";
+  }
 
  
 
