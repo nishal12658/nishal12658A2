@@ -28,14 +28,38 @@
         <p class="hero-description">
           Join us in making a difference! Our mission is to connect communities through meaningful charity events that support various causes and create positive impact in the world.
         </p>
-        <div class="contact-info">
-          <p><strong>Contact Us:</strong> info@charityevents.org | (555) 123-4567</p>
+        <div class="organization-info">
+          <div class="info-grid">
+            <div class="info-item">
+              <h3>Our Mission</h3>
+              <p>To create positive change through community-driven charity events that support education, healthcare, and social welfare initiatives.</p>
+            </div>
+            <div class="info-item">
+              <h3>What We Do</h3>
+              <p>We organize and promote charity events including fundraisers, awareness campaigns, volunteer drives, and community service projects.</p>
+            </div>
+            <div class="info-item">
+              <h3>Get Involved</h3>
+              <p>Join our community of volunteers, donors, and supporters who are committed to making a meaningful difference in society.</p>
+            </div>
+          </div>
+          <div class="contact-info">
+            <p><strong>Contact Us:</strong> info@charityevents.org | (555) 123-4567</p>
+            <p><strong>Address:</strong> 123 Charity Street, Community City, CC 12345</p>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="events-section">
-      <h2>Upcoming Charity Events</h2>
+      <div class="events-header">
+        <h2>Charity Events</h2>
+        <div class="event-filters">
+          <button id="allBtn" class="filter-btn active" onclick="filterEvents('all')">All Events</button>
+          <button id="upcomingBtn" class="filter-btn" onclick="filterEvents('upcoming')">Upcoming</button>
+          <button id="pastBtn" class="filter-btn" onclick="filterEvents('past')">Past Events</button>
+        </div>
+      </div>
       <div id="loading" class="loading">Loading events...</div>
       <div id="eventList" class="event-grid"></div>
       <div id="errorMessage" class="error-message" style="display: none;"></div>
