@@ -2,7 +2,6 @@ let allEvents = []; // Store all events for filtering
 
 document.addEventListener('DOMContentLoaded', function() {
     loadEvents();
-    setupEventFilters();
 });
 
 async function loadEvents() {
@@ -133,11 +132,6 @@ function displayEvents(events) {
     }).join('');
 
     eventListElement.innerHTML = eventsHTML;
-}
-
-function setupEventFilters() {
-    // Filter buttons are already set up in HTML with onclick handlers
-    // This function can be used for additional filter setup if needed
 }
 
 function viewEventDetails(eventId) {
