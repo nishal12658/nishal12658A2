@@ -1,5 +1,8 @@
+let allEvents = []; // Store all events for filtering
+
 document.addEventListener('DOMContentLoaded', function() {
     loadEvents();
+    setupEventFilters();
 });
 
 async function loadEvents() {
@@ -17,16 +20,17 @@ async function loadEvents() {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const events = await response.json();
+        allEvents = await response.json();
         
         loadingElement.style.display = 'none';
         
-        if (events.length === 0) {
+        if (allEvents.length === 0) {
             eventListElement.innerHTML = '<p class="no-results">No events available at the moment.</p>';
             return;
         }
 
-        displayEvents(events);
+        // Show all events by default
+        filterEvents('all');
         
     } catch (error) {
         console.error('Error loading events:', error);
@@ -36,11 +40,75 @@ async function loadEvents() {
     }
 }
 
+async function filterEvents(filterType) {
+    const loadingElement = document.getElementById('loading');
+    const eventListElement = document.getElementById('eventList');
+    const errorElement = document.getElementById('errorMessage');
+
+    try {
+        loadingElement.style.display = 'block';
+        errorElement.style.display = 'none';
+
+        // Build API URL with status filter
+        let apiUrl = '/api/events';
+        if (filterType !== 'all') {
+            apiUrl += `?status=${filterType}`;
+        }
+
+        const response = await fetch(apiUrl);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const filteredEvents = await response.json();
+        
+        loadingElement.style.display = 'none';
+        
+        // Update active filter button
+        updateActiveFilter(filterType);
+        
+        // Display filtered events
+        displayEvents(filteredEvents);
+        
+    } catch (error) {
+        console.error('Error filtering events:', error);
+        loadingElement.style.display = 'none';
+        errorElement.textContent = 'Failed to load events. Please try again later.';
+        errorElement.style.display = 'block';
+    }
+}
+
+function updateActiveFilter(filterType) {
+    // Remove active class from all buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Add active class to clicked button
+    const buttonMap = {
+        'all': 'allBtn',
+        'upcoming': 'upcomingBtn',
+        'past': 'pastBtn'
+    };
+    
+    const activeButton = document.getElementById(buttonMap[filterType]);
+    if (activeButton) {
+        activeButton.classList.add('active');
+    }
+}
+
 function displayEvents(events) {
     const eventListElement = document.getElementById('eventList');
     
+    if (events.length === 0) {
+        eventListElement.innerHTML = '<p class="no-results">No events found for the selected filter.</p>';
+        return;
+    }
+    
     const eventsHTML = events.map(event => {
-        const eventDate = new Date(event.date).toLocaleDateString('en-US', {
+        const eventDate = new Date(event.date);
+        const formattedDate = eventDate.toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric'
@@ -50,10 +118,9 @@ function displayEvents(events) {
             <div class="event-card" onclick="viewEventDetails(${event.id})">
                 <h3>${event.name}</h3>
                 <div class="event-meta">
-                    <span class="event-date">${eventDate}</span>
+                    <span class="event-date">${formattedDate}</span>
                     <span class="event-location">${event.location}</span>
-                    <span class="event-category">${event.category}</span>
-                    <span class="event-status">${event.status}</span>
+                    <span class="event-category">${event.category || 'General'}</span>
                 </div>
                 <div class="event-description">
                     ${event.description || 'Join us for this meaningful charity event.'}
@@ -66,6 +133,11 @@ function displayEvents(events) {
     }).join('');
 
     eventListElement.innerHTML = eventsHTML;
+}
+
+function setupEventFilters() {
+    // Filter buttons are already set up in HTML with onclick handlers
+    // This function can be used for additional filter setup if needed
 }
 
 function viewEventDetails(eventId) {
