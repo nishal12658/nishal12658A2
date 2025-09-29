@@ -53,6 +53,7 @@ function displayEvents(events) {
                     <span class="event-date">${eventDate}</span>
                     <span class="event-location">${event.location}</span>
                     <span class="event-category">${event.category}</span>
+                    <span class="event-status">${event.status}</span>
                 </div>
                 <div class="event-description">
                     ${event.description || 'Join us for this meaningful charity event.'}
