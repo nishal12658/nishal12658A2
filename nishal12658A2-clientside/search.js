@@ -30,8 +30,54 @@ document.addEventListener("DOMContentLoaded", function () {
     noResultsElement.style.display = "none";
   }
 
- 
+  async function performSearch() {
+    const formData = new FormData(searchForm);
+    const searchParams = new URLSearchParams();
 
-  
+    // Build search parameters
+    for (let [key, value] of formData.entries()) {
+      if (value.trim() !== "") {
+        searchParams.append(key, value.trim());
+      }
+    }
+
+    try {
+      // Show loading
+      loadingElement.style.display = "block";
+      errorElement.style.display = "none";
+      noResultsElement.style.display = "none";
+      searchResultsElement.innerHTML = "";
+
+      // Make API call
+      const queryString = searchParams.toString();
+      const url = queryString ? `/api/events?${queryString}` : "/api/events";
+
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const events = await response.json();
+
+      loadingElement.style.display = "none";
+
+      if (events.length === 0) {
+        noResultsElement.style.display = "block";
+        return;
+      }
+
+      displaySearchResults(events);
+    } catch (error) {
+      console.error("Error searching events:", error);
+      loadingElement.style.display = "none";
+      errorElement.textContent =
+        "Failed to search events. Please try again later.";
+      errorElement.style.display = "block";
+    }
+  }
+
+
 });
+
 
