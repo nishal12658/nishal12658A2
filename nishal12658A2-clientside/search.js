@@ -114,7 +114,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     searchResultsElement.innerHTML = eventsHTML;
   }
+
+  fetchCategories();
 });
+
+async function fetchCategories() {
+  try {
+    const response = await fetch("/api/categories");
+    const categories = await response.json();
+    const categorySelect = document.getElementById("eventCategory");
+    categorySelect.innerHTML = '<option value="">All Categories</option>';
+    categories.forEach((cat) => {
+      categorySelect.innerHTML += `<option value="${cat.name}">${cat.name}</option>`;
+    });
+  } catch (error) {
+    console.error("Failed to load categories:", error);
+  }
+}
 
 // Global function for navigation (shared with main.js)
 function viewEventDetails(eventId) {
